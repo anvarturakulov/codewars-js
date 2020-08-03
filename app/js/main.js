@@ -148,26 +148,22 @@ function duplicateEncode(word){
 //alert(duplicateEncode("Success"));
 
 function dirReduc(arr){
-  
   function twinSide(side1, side2){
-    if (side2 == undefined) side2 = '';
-    let sideTwin = side1[0]+side2[0];
-    if (sideTwin == 'ns' || sideTwin=='sn') return true;
-    if (sideTwin == 'we' || sideTwin=='ew') return true;
+    let sideTwin;
+    side1 == undefined ? sideTwin = side2[0] : sideTwin = side1[0]+side2[0];
+    if (sideTwin == 'NS' || sideTwin=='SN') return true;
+    if (sideTwin == 'WE' || sideTwin=='EW') return true;
     return false;
   }
-  
   let newArr = [];
-  let shortArr = [];
-  newArr = arr.map(el => String(el).toLowerCase());
-  for (let i = 0; i < newArr.length;) {
-    if (twinSide(newArr[i],newArr[i+1]) == false) {
-      shortArr.push(newArr[i]); 
-      i += 1;
-    } else i +=2;
+  for (let i = 0; i < arr.length; i++) {
+    let startElement = newArr[newArr.length-1];
+    let endElement   = arr[i];
+    twinSide(startElement, endElement) == false ? newArr.push(arr[i]) : newArr.pop();
   }
-  return shortArr;
+  return newArr;
 }
+
 
 (dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]) == ["WEST"]) ? alert('Test 1 - OK') : alert('Test 1 - No');
 (dirReduc(["NORTH", "WEST", "SOUTH", "EAST"]) == ["NORTH", "WEST", "SOUTH", "EAST"]) ? alert('Test 2 - OK') : alert('Test 2 - No');
